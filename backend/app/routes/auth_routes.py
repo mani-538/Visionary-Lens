@@ -10,6 +10,8 @@ from backend.app.services.auth_service import hash_password
 
 from backend.app.services.auth_service import verify_password
 
+from backend.app.services.jwt_service import create_access_token
+
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 
@@ -55,11 +57,17 @@ def login(user: UserLogin):
 
     db.close()
 
+    token = create_access_token(
+    data={"user_id": db_user.id, "email": db_user.email}
+)
+    
     return {
         "message": "Login successful",
-        "user": {
-            "id": db_user.id,
-            "email": db_user.email,
-            "full_name": db_user.full_name
+    "access_token": token,
+    "token_type": "bearer",
+    "user": {
+        "id": db_user.id,
+        "email": db_user.email,
+        "full_name": db_user.full_name
         }
     }
