@@ -1,6 +1,5 @@
 from fastapi import APIRouter
-from backend.app.schemas.user_schema import UserRegister
-from backend.app.schemas.user_schema import UserRegister, UserLogin
+from backend.app.schemas.user_schema import UserRegister, UserLogin, PasswordResetRequest
 
 from backend.app.services.auth_service import hash_password
 
@@ -71,3 +70,24 @@ def login(user: UserLogin):
         "full_name": db_user.full_name
         }
     }
+
+@router.post("/logout")
+def logout():
+    # In a stateless JWT setup, logout is primarily handled by the client 
+    # (deleting the token). Here we return a confirmation.
+    return {"message": "Successfully logged out"}
+
+@router.post("/reset-password")
+def reset_password(request: PasswordResetRequest):
+    db = SessionLocal()
+    db_user = db.query(User).filter(User.email == request.email).first()
+    
+    if not db_user:
+        db.close()
+        return {"message": "User not found"}
+    
+    db_user.password_hash = hash_password(request.new_password)
+    db.commit()
+    db.close()
+    
+    return {"message": "Password reset successfully"}
