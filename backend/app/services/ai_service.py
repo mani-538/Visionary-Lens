@@ -66,3 +66,38 @@ class AIService:
             prompt = f"Explain this formula: {text_or_image}. Provide the spoken version and the meaning of each variable."
             response = self.model.generate_content(prompt)
         return response.text
+
+    async def ask_contextual_question(self, context: str, question: str) -> str:
+        """
+        Answers a user question based on the provided document context.
+        """
+        prompt = f"""
+        You are an academic assistant for a visually impaired student.
+        Based on the following document content, answer the user's question clearly and concisely.
+        
+        Document Content:
+        {context}
+        
+        Student's Question:
+        {question}
+        
+        Answer:
+        """
+        response = self.model.generate_content(prompt)
+        return response.text
+
+    async def generate_flashcards(self, text: str) -> str:
+        """
+        Generates flashcards from the text.
+        """
+        prompt = f"Based on the following content, generate 5-10 flashcards (Question and Answer pairs) for study. Focus on key concepts and definitions:\n\n{text}"
+        response = self.model.generate_content(prompt)
+        return response.text
+
+    async def generate_quiz(self, text: str) -> str:
+        """
+        Generates a quiz from the text.
+        """
+        prompt = f"Based on the following content, generate a multiple-choice quiz with 5 questions. Provide the questions, options, and correct answers clearly marked:\n\n{text}"
+        response = self.model.generate_content(prompt)
+        return response.text
