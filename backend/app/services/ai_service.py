@@ -36,3 +36,33 @@ class AIService:
         prompt = "Analyze the layout of this document and describe it in a structured format (JSON including regions like Title, Body, Footer)."
         response = self.model.generate_content([prompt, img])
         return response.text
+
+    async def summarize_text(self, text: str) -> str:
+        """
+        Summarizes the extracted text.
+        """
+        prompt = f"Summarize the following educational content in a way that is easy for a visually impaired student to understand:\n\n{text}"
+        response = self.model.generate_content(prompt)
+        return response.text
+
+    async def explain_diagram(self, image_path: str) -> str:
+        """
+        Explains a diagram (Biology, Process, Architecture, etc.)
+        """
+        img = Image.open(image_path)
+        prompt = "Explain this diagram in detail. Imagine you are describing it to a blind student. Be very clear and descriptive about and parts and their relationships."
+        response = self.model.generate_content([prompt, img])
+        return response.text
+
+    async def explain_formula(self, text_or_image: str, is_image: bool = False) -> str:
+        """
+        Explains mathematical or scientific formulas.
+        """
+        if is_image:
+            img = Image.open(text_or_image)
+            prompt = "Identify and explain any mathematical or scientific formulas in this image. Read them out as they would be spoken (e.g. 'E equals m c squared') and explain what they mean."
+            response = self.model.generate_content([prompt, img])
+        else:
+            prompt = f"Explain this formula: {text_or_image}. Provide the spoken version and the meaning of each variable."
+            response = self.model.generate_content(prompt)
+        return response.text
