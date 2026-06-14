@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String baseUrl = "http://YOUR_BACKEND_IP:8000";
+  static const String baseUrl = "https://visionary-lens-backend.onrender.com";
 
   Future<Map<String, dynamic>> login(String email, String password) async {
     final response = await http.post(
