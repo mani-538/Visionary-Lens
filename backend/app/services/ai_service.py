@@ -1,9 +1,12 @@
 import os
 import google.generativeai as genai
 from PIL import Image
+from dotenv import load_dotenv
 
-# For production, use environment variables
-GEMINI_API_KEY = "YOUR_GEMINI_API_KEY"
+load_dotenv()
+
+# Use environment variable for the API key
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=GEMINI_API_KEY)
 
 class AIService:

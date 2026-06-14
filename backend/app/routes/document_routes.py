@@ -30,14 +30,30 @@ async def upload_document(
     if not user_id:
         raise HTTPException(status_code=401, detail="User ID not found in token")
 
-    # Save file locally for now
-    file_path = os.path.join(UPLOAD_DIR, f"{user_id}_{file.filename}")
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+    # Cloudinary Integration or Local Fallback
+    import cloudinary
+    import cloudinary.uploader
+    import cloudinary.api
+    from dotenv import load_dotenv
+
+    load_dotenv()
+    
+    file_extension = os.path.splitext(file.filename)[1]
+    safe_filename = f"{user_id}_{os.urandom(8).hex()}{file_extension}"
+    
+    if os.getenv("CLOUDINARY_URL"):
+        # Upload to Cloudinary directly from memory
+        result = cloudinary.uploader.upload(file.file)
+        file_path = result.get("secure_url")
+    else:
+        # Save file locally for now as fallback
+        file_path = os.path.join(UPLOAD_DIR, safe_filename)
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
 
     new_doc = Document(
         user_id=user_id,
-        image_url=file_path,  # Local path for now
+        image_url=file_path,  # Cloudinary URL or Local path
         extracted_text=""     # Placeholder for OCR
     )
 

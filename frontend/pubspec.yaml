@@ -1,0 +1,33 @@
+name: visionary_lens
+description: An AI-Powered Zero-Sight Academic Assistant for Visually Impaired Students.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  provider: ^6.1.1
+  http: ^1.1.0
+  flutter_tts: ^3.8.3
+  speech_to_text: ^6.3.0
+  camera: ^0.10.5+5
+  path_provider: ^2.1.1
+  image_picker: ^1.0.4
+  shared_preferences: ^2.2.2
+  intl: ^0.18.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  # To add assets to your application, add an assets section, like this:
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
