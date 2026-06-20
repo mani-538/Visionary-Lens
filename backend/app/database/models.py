@@ -56,3 +56,13 @@ class Conversation(Base):
 
     # Relationships
     document = relationship("Document", back_populates="conversations")
+
+
+class VisionScan(Base):
+    __tablename__ = "vision_scans"
+
+    id = Column(Integer, primary_key=True, index=True)
+    image_path = Column(String, nullable=False)
+    analysis_result = Column(Text, nullable=False)
+    confidence = Column(Integer, nullable=True) # Confidence as percentage
+    created_at = Column(DateTime, default=datetime.utcnow)
