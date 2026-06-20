@@ -34,6 +34,8 @@ def _analyze_with_gemini(image_path: str) -> dict:
     if not api_key or api_key == "your_gemini_api_key_here":
         raise ValueError("GEMINI_API_KEY not configured")
 
+    client = genai.Client(api_key=api_key)
+
     # Open the image (handle local path or URL)
     if image_path.startswith("http"):
         import requests

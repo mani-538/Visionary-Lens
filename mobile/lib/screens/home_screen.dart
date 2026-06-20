@@ -4,6 +4,8 @@ import '../providers/auth_provider.dart';
 import '../widgets/feature_card.dart';
 import 'vision_scan_screen.dart';
 import 'history_screen.dart';
+import 'library_screen.dart';
+import 'settings_screen.dart';
 import 'auth/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -79,17 +81,19 @@ class HomeScreen extends StatelessWidget {
                       color: Color(0xFF10B981),
                       nextScreen: HistoryScreen(),
                     ),
-                    FeatureCard(
+                    const FeatureCard(
                       icon: Icons.image_search_rounded,
                       title: "Library",
                       subtitle: "Browse photos",
-                      color: const Color(0xFFF59E0B),
+                      color: Color(0xFFF59E0B),
+                      nextScreen: LibraryScreen(),
                     ),
-                    FeatureCard(
+                    const FeatureCard(
                       icon: Icons.settings_rounded,
                       title: "Settings",
                       subtitle: "Configurations",
-                      color: const Color(0xFF6366F1),
+                      color: Color(0xFF6366F1),
+                      nextScreen: SettingsScreen(),
                     ),
                   ],
                 ),
